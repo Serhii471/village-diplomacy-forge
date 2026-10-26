@@ -43,6 +43,14 @@ Import the project as a Gradle project. ForgeGradle generates machine-local run 
 | Route Signpost | Bind to a known settlement and display direction, distance, relations, and route state. |
 | Village Guard Spawn Egg | Creative-only development item for spawning a guard. |
 
+### Residents and garrison (0.2.0)
+- **Human residents** — vanilla villagers retain their professions, trading and breeding while using human models, regional clothing and stable identity palettes.
+- **Resident recruitment** — open the diplomacy table's Garrison, supply a chosen sword, chestplate and six bread, and train an adult unemployed resident for one game day. Queued recruits count toward the 25% military cap; at least four adult civilians must remain.
+- **Reversible service** — the soldier retains the original resident's name and face. Cancel training to refund supplies, or demobilize a recruited soldier to restore the original villager and return current equipment once. Training and origin data survive saving/loading.
+
+See [resident and garrison behavior, screenshots and verification](docs/development/residents-garrison.md).
+
+
 ## Verification
 
 The regular unit and package check is:

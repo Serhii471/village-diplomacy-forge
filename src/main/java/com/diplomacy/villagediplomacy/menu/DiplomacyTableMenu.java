@@ -58,8 +58,14 @@ public final class DiplomacyTableMenu extends AbstractContainerMenu {
     @Override
     public boolean clickMenuButton(Player player, int buttonId) {
         if (!(player instanceof ServerPlayer serverPlayer)
-                || serverPlayer.containerMenu != this || !stillValid(player)
-                || buttonId < ACCEPT_CONTRACT_BUTTON_BASE) {
+                || serverPlayer.containerMenu != this || !stillValid(player)) {
+            return false;
+        }
+        if (buttonId == GarrisonMenu.OPEN) {
+            GarrisonMenu.open(serverPlayer, tablePos, "");
+            return true;
+        }
+        if (buttonId < ACCEPT_CONTRACT_BUTTON_BASE) {
             return false;
         }
         if (buttonId == 6_000) {

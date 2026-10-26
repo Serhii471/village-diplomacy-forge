@@ -3,6 +3,7 @@ package com.diplomacy.villagediplomacy.client.screen;
 import com.diplomacy.villagediplomacy.VillageDiplomacyMod;
 import com.diplomacy.villagediplomacy.menu.DiplomacyTableMenu;
 import com.diplomacy.villagediplomacy.menu.DiplomacyTableSnapshot;
+import com.diplomacy.villagediplomacy.menu.GarrisonMenu;
 import com.diplomacy.villagediplomacy.diplomacy.TradeAgreementService;
 import com.diplomacy.villagediplomacy.network.DiplomacyNetwork;
 import net.minecraft.client.Minecraft;
@@ -43,6 +44,7 @@ public final class DiplomacyTableScreen extends AbstractContainerScreen<Diplomac
     private Button allianceButton;
     private Button declineAllianceButton;
     private Button routesButton;
+    private Button garrisonButton;
     private final Button[] tabButtons = new Button[Tab.values().length];
 
     public DiplomacyTableScreen(DiplomacyTableMenu menu, Inventory inventory, Component title) {
@@ -55,6 +57,9 @@ public final class DiplomacyTableScreen extends AbstractContainerScreen<Diplomac
     @Override
     protected void init() {
         super.init();
+        garrisonButton = addRenderableWidget(Button.builder(Component.translatable("screen.villagediplomacy.garrison"),
+                        ignored -> DiplomacyNetwork.sendMenuAction(menu.containerId, GarrisonMenu.OPEN))
+                .bounds(leftPos + 40, topPos + 207, 220, 20).build());
         int tabWidth = 68;
         for (int index = 0; index < Tab.values().length; index++) {
             Tab tab = Tab.values()[index];
@@ -239,6 +244,7 @@ public final class DiplomacyTableScreen extends AbstractContainerScreen<Diplomac
         List<DiplomacyTableSnapshot.ContractEntry> offers = offeredContracts();
         boolean tradeTab = selectedTab == Tab.TRADE;
         routesButton.visible = selectedTab == Tab.ROUTES;
+        garrisonButton.visible = selectedTab == Tab.SETTLEMENT;
         selectedOfferIndex = offers.isEmpty() ? 0 : Math.min(selectedOfferIndex, offers.size() - 1);
         previousOfferButton.visible = tradeTab && offers.size() > 1;
         nextOfferButton.visible = tradeTab && offers.size() > 1;

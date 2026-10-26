@@ -1,6 +1,10 @@
 package com.diplomacy.villagediplomacy;
 
 import com.diplomacy.villagediplomacy.client.renderer.VillageGuardRenderer;
+import com.diplomacy.villagediplomacy.client.renderer.HumanVillagerRenderer;
+import com.diplomacy.villagediplomacy.client.screen.GarrisonScreen;
+import com.diplomacy.villagediplomacy.network.ResidentNetwork;
+import net.minecraft.world.entity.EntityType;
 import com.diplomacy.villagediplomacy.client.screen.DiplomacyTableScreen;
 import com.diplomacy.villagediplomacy.client.screen.TradeHandoverScreen;
 import com.diplomacy.villagediplomacy.client.screen.RouteScreen;
@@ -46,6 +50,7 @@ public class VillageDiplomacyMod {
         ModItems.ITEMS.register(modEventBus);
         ModEntities.ENTITY_TYPES.register(modEventBus);
         ModMenus.MENUS.register(modEventBus);
+        ResidentNetwork.register();
         ModLoadingContext.get().registerConfig(
                 ModConfig.Type.SERVER,
                 VillageDiplomacyConfig.SERVER_SPEC,
@@ -87,6 +92,7 @@ public class VillageDiplomacyMod {
                 MenuScreens.register(ModMenus.DIPLOMACY_TABLE.get(), DiplomacyTableScreen::new);
                 MenuScreens.register(ModMenus.TRADE_HANDOVER.get(), TradeHandoverScreen::new);
                 MenuScreens.register(ModMenus.ROUTES.get(), RouteScreen::new);
+                MenuScreens.register(ModMenus.GARRISON.get(), GarrisonScreen::new);
             });
         }
 
@@ -94,6 +100,7 @@ public class VillageDiplomacyMod {
         public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
             event.registerEntityRenderer(ModEntities.VILLAGE_GUARD.get(), VillageGuardRenderer::new);
             event.registerBlockEntityRenderer(ModBlockEntities.ROUTE_SIGNPOST.get(), RouteSignpostRenderer::new);
+            event.registerEntityRenderer(EntityType.VILLAGER, HumanVillagerRenderer::new);
         }
     }
 }
