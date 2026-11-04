@@ -60,6 +60,22 @@ resolution. http://maven.apache.org/
 It also contains a partial repackaging of the javaxdelta library from http://sourceforge.net/projects/javaxdelta/
 with credit to it's authors.
 
+=========================================================================
+
+Village Diplomacy texture credits
+
+Route signpost board and post textures are adapted from the baobab wood
+textures in Auseawesome's Minecraft Textures repository:
+https://github.com/Auseawesome/Minecraft-Textures
+
+Source files:
+- blocks/wood/baobab/planks.png
+- blocks/wood/baobab/log.png
+
+Author: Auseawesome
+License: Creative Commons Zero v1.0 Universal (CC0-1.0)
+https://creativecommons.org/publicdomain/zero/1.0/
+
 Forge Mod Loader downloads components from the Minecraft Coder Pack
 (http://mcp.ocean-labs.de/index.php/Main_Page) with kind permission from the MCP team.
 

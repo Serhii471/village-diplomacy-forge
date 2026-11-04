@@ -1,8 +1,8 @@
 {
   "textures": {
-    "board": "minecraft:block/oak_planks",
-    "post": "minecraft:block/spruce_planks",
-    "particle": "minecraft:block/oak_planks"
+    "board": "villagediplomacy:block/route_signpost_board",
+    "post": "villagediplomacy:block/route_signpost_post",
+    "particle": "villagediplomacy:block/route_signpost_board"
   },
   "elements": [
     {
