@@ -1,5 +1,6 @@
 package com.diplomacy.villagediplomacy.client.screen;
 
+import com.diplomacy.villagediplomacy.VillageDiplomacyMod;
 import com.diplomacy.villagediplomacy.menu.DiplomacyTableMenu;
 import com.diplomacy.villagediplomacy.menu.DiplomacyTableSnapshot;
 import com.diplomacy.villagediplomacy.diplomacy.TradeAgreementService;
@@ -7,6 +8,7 @@ import com.diplomacy.villagediplomacy.network.DiplomacyNetwork;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
@@ -19,8 +21,8 @@ import java.util.List;
 import java.util.Locale;
 
 public final class DiplomacyTableScreen extends AbstractContainerScreen<DiplomacyTableMenu> {
-    private static final int PANEL_COLOR = 0xFFE3D2AD;
-    private static final int PANEL_DARK = 0xFF3A2A1E;
+    private static final ResourceLocation BACKGROUND = ResourceLocation.fromNamespaceAndPath(
+            VillageDiplomacyMod.MOD_ID, "textures/gui/diplomacy_table.png");
     private static final int TEXT_COLOR = 0xFF2A1B12;
     private static final int MUTED_COLOR = 0xFF6A5648;
     private static final int MAX_LINES = 11;
@@ -41,6 +43,7 @@ public final class DiplomacyTableScreen extends AbstractContainerScreen<Diplomac
     private Button allianceButton;
     private Button declineAllianceButton;
     private Button routesButton;
+    private final Button[] tabButtons = new Button[Tab.values().length];
 
     public DiplomacyTableScreen(DiplomacyTableMenu menu, Inventory inventory, Component title) {
         super(menu, inventory, title);
@@ -55,9 +58,12 @@ public final class DiplomacyTableScreen extends AbstractContainerScreen<Diplomac
         int tabWidth = 68;
         for (int index = 0; index < Tab.values().length; index++) {
             Tab tab = Tab.values()[index];
-            addRenderableWidget(Button.builder(
-                            Component.translatable(tab.translationKey),
+            Component label = Component.translatable(tab.translationKey);
+            tabButtons[index] = addRenderableWidget(Button.builder(
+                            Component.empty(),
                             ignored -> selectTab(tab))
+                    .tooltip(Tooltip.create(label))
+                    .createNarration(ignored -> label.copy())
                     .bounds(leftPos + 8 + index * (tabWidth + 4), topPos + 28, tabWidth, 20)
                     .build());
         }
@@ -91,6 +97,7 @@ public final class DiplomacyTableScreen extends AbstractContainerScreen<Diplomac
         routesButton = addRenderableWidget(Button.builder(Component.translatable("screen.villagediplomacy.routes.manage"),
                 ignored -> DiplomacyNetwork.sendMenuAction(menu.containerId, 6_000))
                 .bounds(leftPos + 40, topPos + 207, 220, 20).build());
+        updateTabButtons();
         updateOfferControls();
     }
 
@@ -103,9 +110,8 @@ public final class DiplomacyTableScreen extends AbstractContainerScreen<Diplomac
 
     @Override
     protected void renderBg(GuiGraphics guiGraphics, float partialTick, int mouseX, int mouseY) {
-        guiGraphics.fill(leftPos, topPos, leftPos + imageWidth, topPos + imageHeight, PANEL_DARK);
-        guiGraphics.fill(leftPos + 3, topPos + 3, leftPos + imageWidth - 3, topPos + imageHeight - 3, PANEL_COLOR);
-        guiGraphics.fill(leftPos + 7, topPos + 52, leftPos + imageWidth - 7, topPos + imageHeight - 8, 0x55FFFFFF);
+        guiGraphics.blit(BACKGROUND, leftPos, topPos, imageWidth, imageHeight,
+                0.0F, 0.0F, 256, 256, 256, 256);
     }
 
     @Override
@@ -117,6 +123,10 @@ public final class DiplomacyTableScreen extends AbstractContainerScreen<Diplomac
                 : "screen.villagediplomacy.table.access.view");
         guiGraphics.drawString(font, access, imageWidth - 8 - font.width(access), 9,
                 snapshot.canManage() ? 0xFF236523 : 0xFF765A25, false);
+        for (int index = 0; index < Tab.values().length; index++) {
+            guiGraphics.blit(Tab.values()[index].icon, 34 + index * 72, 30,
+                    0, 0, 16, 16, 16, 16);
+        }
 
         renderLines(guiGraphics, currentLines(snapshot));
     }
@@ -172,7 +182,16 @@ public final class DiplomacyTableScreen extends AbstractContainerScreen<Diplomac
         scrollOffset = 0;
         confirmTermination = false;
         confirmAllianceTermination = false;
+        updateTabButtons();
         updateOfferControls();
+    }
+
+    private void updateTabButtons() {
+        for (int index = 0; index < tabButtons.length; index++) {
+            if (tabButtons[index] != null) {
+                tabButtons[index].active = Tab.values()[index] != selectedTab;
+            }
+        }
     }
 
     private List<DiplomacyTableSnapshot.ContractEntry> offeredContracts() {
@@ -464,15 +483,18 @@ public final class DiplomacyTableScreen extends AbstractContainerScreen<Diplomac
     }
 
     private enum Tab {
-        SETTLEMENT("screen.villagediplomacy.table.tab.settlement"),
-        RELATIONS("screen.villagediplomacy.table.tab.relations"),
-        TRADE("screen.villagediplomacy.table.tab.trade"),
-        ROUTES("screen.villagediplomacy.table.tab.routes");
+        SETTLEMENT("screen.villagediplomacy.table.tab.settlement", "tab_settlement"),
+        RELATIONS("screen.villagediplomacy.table.tab.relations", "tab_relations"),
+        TRADE("screen.villagediplomacy.table.tab.trade", "tab_trade"),
+        ROUTES("screen.villagediplomacy.table.tab.routes", "tab_routes");
 
         private final String translationKey;
+        private final ResourceLocation icon;
 
-        Tab(String translationKey) {
+        Tab(String translationKey, String iconName) {
             this.translationKey = translationKey;
+            this.icon = ResourceLocation.fromNamespaceAndPath(VillageDiplomacyMod.MOD_ID,
+                    "textures/gui/icons/" + iconName + ".png");
         }
     }
 }

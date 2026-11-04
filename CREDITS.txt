@@ -76,6 +76,28 @@ Author: Auseawesome
 License: Creative Commons Zero v1.0 Universal (CC0-1.0)
 https://creativecommons.org/publicdomain/zero/1.0/
 
+GUI backgrounds use adapted panel and frame elements from:
+
+Parchment GUI by zwonky:
+https://opengameart.org/content/parchment-gui
+Source file: panels.png
+License: Creative Commons Zero v1.0 Universal (CC0-1.0)
+
+Pixel Art Wooden GUI by Narik / Soulofkiran:
+https://opengameart.org/content/pixel-art-wooden-gui-by-narik-soulofkiran
+Source file: wooden_gui_32x32.png
+License: Creative Commons Zero v1.0 Universal (CC0-1.0)
+
+Diplomacy tab icons use recolored sprites from 1-bit Pixel Icons by Nikoichu:
+https://nikoichu.itch.io/pixel-icons
+Source sprites:
+- Travel_Bell_Handle_Town_Crier_News.png
+- RPG_Trade_Handshake_Deal_Exchange.png
+- RPG_Trade_Libra_Scales_Balanced_Even_Fair_Law_Justice_Judge.png
+- Travel_Roadway_Turn_Corner_Curve.png
+License: Creative Commons Zero v1.0 Universal (CC0-1.0)
+https://creativecommons.org/publicdomain/zero/1.0/
+
 Forge Mod Loader downloads components from the Minecraft Coder Pack
 (http://mcp.ocean-labs.de/index.php/Main_Page) with kind permission from the MCP team.
 

@@ -1,5 +1,6 @@
 package com.diplomacy.villagediplomacy.client.screen;
 
+import com.diplomacy.villagediplomacy.VillageDiplomacyMod;
 import com.diplomacy.villagediplomacy.network.DiplomacyNetwork;
 
 import com.diplomacy.villagediplomacy.menu.TradeHandoverMenu;
@@ -19,8 +20,8 @@ import java.util.List;
 import java.util.Locale;
 
 public final class TradeHandoverScreen extends AbstractContainerScreen<TradeHandoverMenu> {
-    private static final int PANEL = 0xFFE3D2AD;
-    private static final int BORDER = 0xFF3A2A1E;
+    private static final ResourceLocation BACKGROUND = ResourceLocation.fromNamespaceAndPath(
+            VillageDiplomacyMod.MOD_ID, "textures/gui/trade_handover.png");
     private static final int TEXT = 0xFF2A1B12;
     private static final int MUTED = 0xFF6A5648;
     private static final int MAX_LINES = 11;
@@ -64,9 +65,8 @@ public final class TradeHandoverScreen extends AbstractContainerScreen<TradeHand
 
     @Override
     protected void renderBg(GuiGraphics graphics, float partialTick, int mouseX, int mouseY) {
-        graphics.fill(leftPos, topPos, leftPos + imageWidth, topPos + imageHeight, BORDER);
-        graphics.fill(leftPos + 3, topPos + 3, leftPos + imageWidth - 3, topPos + imageHeight - 3, PANEL);
-        graphics.fill(leftPos + 8, topPos + 46, leftPos + imageWidth - 8, topPos + 204, 0x55FFFFFF);
+        graphics.blit(BACKGROUND, leftPos, topPos, imageWidth, imageHeight,
+                0.0F, 0.0F, 256, 256, 256, 256);
     }
 
     @Override

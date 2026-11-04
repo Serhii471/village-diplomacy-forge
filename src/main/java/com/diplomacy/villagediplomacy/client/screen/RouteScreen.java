@@ -1,5 +1,6 @@
 package com.diplomacy.villagediplomacy.client.screen;
 
+import com.diplomacy.villagediplomacy.VillageDiplomacyMod;
 import com.diplomacy.villagediplomacy.menu.RouteMenu;
 import com.diplomacy.villagediplomacy.menu.RouteSnapshot;
 import com.diplomacy.villagediplomacy.network.DiplomacyNetwork;
@@ -8,9 +9,12 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 
 public final class RouteScreen extends AbstractContainerScreen<RouteMenu> {
+    private static final ResourceLocation BACKGROUND = ResourceLocation.fromNamespaceAndPath(
+            VillageDiplomacyMod.MOD_ID, "textures/gui/route_signpost.png");
     private int selection;
     private boolean closing;
     private EditBox name;
@@ -97,8 +101,8 @@ public final class RouteScreen extends AbstractContainerScreen<RouteMenu> {
 
     @Override
     protected void renderBg(GuiGraphics graphics, float tick, int mouseX, int mouseY) {
-        graphics.fill(leftPos, topPos, leftPos + imageWidth, topPos + imageHeight, 0xFF3A2A1E);
-        graphics.fill(leftPos + 3, topPos + 3, leftPos + imageWidth - 3, topPos + imageHeight - 3, 0xFFE3D2AD);
+        graphics.blit(BACKGROUND, leftPos, topPos, imageWidth, imageHeight,
+                0.0F, 0.0F, 256, 256, 256, 256);
     }
 
     @Override
