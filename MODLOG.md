@@ -21,3 +21,9 @@
 
 - Ported only the two auto-registered `entity/ai` event/goal classes from `29430e0`. No changes to the mod entrypoint, trade, menus or networking.
 - `test --no-daemon --offline`: 89 unit tests passed. Dedicated guard regressions are prepared in C4.
+
+## C3 — regional uniforms
+
+- Ported the pre-garrison renderer, synchronized specialization field, and four 64×64 runtime PNGs from `02c4bf0`. Armor and outer skin layers remain enabled; missing homes select the base texture.
+- `test --no-daemon --offline`: 89 unit tests passed. PNG headers, hashes and absence of resident/garrison references were checked.
+- Asset provenance remains partly unresolved: original base-skin author/license was not recorded. Preserve this limitation in the handoff; see `docs/development/v0.1-guard-assets.md`.
