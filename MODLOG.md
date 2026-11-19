@@ -16,3 +16,8 @@
 
 - Ported only `VillageGuardEntity` from pre-garrison `af6c861`. No resident snapshot, recruitment, menu, texture or shared-core dependency is added.
 - Baseline `test build --no-daemon --offline`: 89 unit tests passed. C1 `test --no-daemon --offline`: 89 unit tests passed.
+
+## C2 — hostile mob targets
+
+- Ported only the two auto-registered `entity/ai` event/goal classes from `29430e0`. No changes to the mod entrypoint, trade, menus or networking.
+- `test --no-daemon --offline`: 89 unit tests passed. Dedicated guard regressions are prepared in C4.
