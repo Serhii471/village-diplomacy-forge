@@ -1,69 +1,78 @@
-# Village Diplomacy — Minecraft Forge Mod 1.20.1
+# Village Diplomacy
 
-A Forge mod that adds a full diplomatic relation system between villages — alliances, trade, tensions, and wars.
+Village Diplomacy is a Minecraft Forge 1.20.1 mod that turns villages into persistent settlements with leaders, resource specializations, physical trade, diplomatic agreements, alliances, routes, and guards.
+
+Version `0.1.0` is currently in integration. The diplomacy and trade core is implemented and tested; the final guard integration and in-game release validation remain before the presentation build is tagged.
 
 ## Requirements
 
-- Java 17 (Eclipse Temurin recommended)
+- Java 17
+- Minecraft 1.20.1
 - Minecraft Forge `1.20.1-47.4.28`
 
-## Setup (IntelliJ IDEA)
+## Development setup
 
-```bash
-./gradlew genIntellijRuns
+```powershell
+.\gradlew.bat genIntellijRuns
+.\gradlew.bat test build --no-daemon
 ```
 
-Open the folder in IntelliJ IDEA, trust the Gradle project, then run the **`runClient`** configuration.
+Import the project as a Gradle project. ForgeGradle generates machine-local run configurations, so `.idea/runConfigurations` is intentionally not tracked.
 
-## Current Features
+## Version 0.1 scope
 
-### Diplomacy Core
-- **`DiplomacyRelation`** — five-tier relation scale: `ALLY → FRIENDLY → NEUTRAL → TENSION → HOSTILE`
-- **`Settlement`** — per-village data: name, center, radius, leader UUID, specializations, local wood, warehouse, and relations
-- **`SettlementSavedData`** — world-level NBT persistence via Forge `SavedData`
-- **Terrain specialization** — one-time sampled analysis assigns plains, mountain, forest, or a mixed profile when a settlement is registered
-- **Virtual production** — day-based resources accrue into a capped five-day trade warehouse, including catch-up while settlement chunks are unloaded
-- **Trial delivery contracts** — persisted offers reserve warehouse stock, track partial handover, expire safely, and prevent duplicate rewards
-- **Physical contract handover** — an assigned carrier uses an empty hand on each settlement's central Bell to open a server-authoritative representative screen, receive or partially deliver ordinary Minecraft item stacks, complete exchanges, and redeem one-time rewards
-- **Trade agreements** — leaders propose, accept, decline, withdraw, or confirm termination in the Relations tab; settlements without a player leader evaluate mutual surplus, relations, distance, and delivery history. Active agreements double offer limits and shipment caps and add two emeralds to rewards; existing contracts survive termination.
-- **Diplomatic alliances** — require an active trade agreement, mutual friendly relations, three deliveries, and no overdue active contracts or failures since the last successful delivery. Leaders confirm proposals; leaderless settlements accept eligible alliances automatically. Allies share production information, remain listed, unlock triple base offer/shipment caps and two extra emeralds beyond trade-agreement rewards. Ending an alliance preserves trade; ending trade clears the alliance. Allied routes and signpost labels use green text; passive reputation decay is not currently implemented.
-- **Persistent routes and maps** — open Routes → Manage routes at a diplomacy table to create, rename, close/reopen a route or issue a map. Only the local leader can modify routes; closure requires confirmation. Maps record both settlement IDs, names, coordinates, dimension, distance, route ID and status. Right-click a map in the air to refresh its recorded status; use it on a signpost to configure its destination.
-- **Road signposts** — craft two with three planks above two sticks, place near a road, then right-click to select a known destination. Only the signpost owner or local leader may configure it. World labels show the destination, compass bearing and distance; the configuration screen adds relations and route status. Reciprocal signs within each endpoint's settlement radius + 32 blocks mark an open route and add one emerald to newly generated offers. Breaking/rebinding a sign or closing a route removes the marked status; existing contracts retain their promised rewards. Unloaded signs remain registered without loading their chunks. No road-continuity check is performed.
+- **Settlements and leadership** — claim a settlement at its central Bell, with all leadership permissions checked on the server.
+- **Terrain specializations** — plains, mountain, forest, and mixed settlements receive persistent production profiles.
+- **Virtual production and warehouses** — capped resource production continues using saved game time without loading settlement chunks.
+- **Discovery** — use a Diplomatic Scroll on a foreign Bell to learn its coordinates, resources, leader, relations, and distance.
+- **Diplomacy table** — inspect server data, offers, contract history, relations, agreements, alliances, and routes through four GUI tabs.
+- **Physical trade** — accept delivery or exchange contracts, carry ordinary Minecraft item stacks, hand them over partially, and claim each reward once.
+- **Trade agreements** — propose, accept, decline, withdraw, and terminate persistent agreements with server-side eligibility checks.
+- **Diplomatic alliances** — unlock alliance benefits after trade, reputation, and successful-delivery requirements are met.
+- **Routes and maps** — create persistent routes, issue route maps, and configure road signposts with direction and distance labels.
+- **Settlement guards** — the final v0.1 candidate will include bounded patrol, diplomacy-aware targeting, hostile-mob reactions, and regional guard textures.
 
-### Items
+## Main items and blocks
+
 | Item | Action |
 |---|---|
-| Diplomatic Scroll | Right-click a foreign Bell → discovers the settlement and shows its coordinates, specialization, resources, leader, relations, and distance |
-| Leadership Seal | Right-click a Bell twice within 10 seconds → confirms leadership; one player can lead only one settlement |
-| Village Guard Spawn Egg | Spawns a guard for testing (Creative only) |
+| Leadership Seal | Right-click a Bell twice within 10 seconds to confirm leadership. One player can lead one settlement. |
+| Diplomatic Scroll | Right-click a foreign Bell to discover the settlement and display its information. |
+| Diplomacy Table | Place within the registered settlement and no farther than 32 blocks from its central Bell. |
+| Trade Route Map | Records both route endpoints and refreshes its authoritative route status. |
+| Route Signpost | Bind to a known settlement and display direction, distance, relations, and route state. |
+| Village Guard Spawn Egg | Creative-only development item for spawning a guard. |
 
-### Entities
-- **Village Guard** — patrols its settlement, fights monsters and guards from `HOSTILE` settlements; spawns equipped with iron sword + chainmail
+## Verification
 
-## Project Structure
+The regular unit and package check is:
 
+```powershell
+.\gradlew.bat test build --no-daemon
 ```
-src/main/java/com/diplomacy/villagediplomacy/
-├── VillageDiplomacyMod.java
-├── core/
-│   ├── ModEntities.java
-│   └── ModItems.java
-├── diplomacy/
-│   ├── DiplomacyRelation.java
-│   ├── Settlement.java
-│   └── SettlementSavedData.java
-├── entity/
-│   └── VillageGuardEntity.java
-└── client/renderer/
-    └── VillageGuardRenderer.java
-```
+
+The release is not considered complete until the integrated candidate also passes its guard GameTests, a single-player smoke test, a dedicated-server smoke test, save/reload verification, and the complete presentation rehearsal.
+
+## Documentation
+
+- [`docs/design/v0.1-concept.md`](docs/design/v0.1-concept.md) — approved gameplay scope and readiness criteria.
+- [`docs/demo/v0.1-presentation-runbook.md`](docs/demo/v0.1-presentation-runbook.md) — deterministic demo-world setup and rehearsal sequence.
+- [`V0.1_AUDIT_AND_COMPLETION_GUIDE_UA.md`](V0.1_AUDIT_AND_COMPLETION_GUIDE_UA.md) — team responsibilities and integration checklist in Ukrainian.
+- [`CHANGELOG.md`](CHANGELOG.md) — release-facing change history.
 
 ## Roadmap
 
 - [ ] Diplomat NPC (quest giver, relation broker)
 - [ ] Courier / Trade caravan AI
-- [ ] Diplomacy table GUI
 - [ ] Autonomous events (raids, siege, allied reinforcements)
-- [ ] Custom guard textures
 - [ ] Village auto-detection on world load
-- [ ] Client-side sync packets
+- [ ] Human residents, professions, recruitment, and garrison management (`0.2.x`)
+
+## Authors
+
+- Arthur — settlement, production, trade, diplomacy, route, GUI, networking, and integration work.
+- Serhii — initial Forge scaffold, guard systems, resident and garrison research, and visual assets.
+
+## License
+
+Project code is released under the MIT license. Third-party and CC0 asset credits are listed in `CREDITS.txt`.
