@@ -2,6 +2,12 @@
 
 All notable changes to Village Diplomacy are documented in this file.
 
+## 0.2.2 Unreleased
+
+- Add the village guard spawn egg's inventory model using the vanilla tinted egg template.
+- Explain the diplomacy table's placement rules in its item tooltip and preserve placement or access errors in chat.
+- Show where to obtain a configured route map when a creative inventory copy is blank.
+
 ## 0.2.1 Unreleased
 
 - Show the next available step in the contract handover screen.

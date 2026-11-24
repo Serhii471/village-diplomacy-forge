@@ -1,5 +1,7 @@
 {
   "item.villagediplomacy.trade_route_map": "Карта торговельного маршруту",
+  "tooltip.villagediplomacy.trade_route_map.blank": "Порожня карта. Створіть маршрут за дипломатичним столом і отримайте карту у вкладці «Маршрути».",
+  "tooltip.villagediplomacy.diplomacy_table.placement": "Поставте в межах 32 блоків від центрального дзвона зареєстрованого поселення.",
   "block.villagediplomacy.route_signpost": "Дорожній вказівник",
   "screen.villagediplomacy.routes.title": "Торговельні маршрути",
   "screen.villagediplomacy.routes.manage": "Керувати маршрутами",
@@ -152,7 +154,7 @@
   "screen.villagediplomacy.trade_handover.next.wait.return_delivery": "Очікування: візьміть зустрічні товари та поверніться до поселення-відправника.",
   "screen.villagediplomacy.trade_handover.next.wait.claim_reward": "Очікування: винагорода за цей контракт уже недоступна.",
 
-  "message.villagediplomacy.table.outside_settlement": "Дипломатичний стіл працює лише в межах зареєстрованого поселення.",
+  "message.villagediplomacy.table.outside_settlement": "Тут немає зареєстрованого поселення. Двічі використайте печатку старости на дзвоні й поставте стіл поруч.",
   "message.villagediplomacy.table.too_far": "Розмістіть дипломатичний стіл не далі ніж за 32 блоки від центрального дзвона.",
   "screen.villagediplomacy.diplomacy_table": "Дипломатичний стіл",
   "screen.villagediplomacy.table.access.manage": "Доступ лідера",

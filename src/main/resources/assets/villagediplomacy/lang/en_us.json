@@ -1,5 +1,7 @@
 {
   "item.villagediplomacy.trade_route_map": "Trade Route Map",
+  "tooltip.villagediplomacy.trade_route_map.blank": "Blank map. Create a route at a diplomacy table and issue its map from the Routes tab.",
+  "tooltip.villagediplomacy.diplomacy_table.placement": "Place within 32 blocks of a registered settlement's central bell.",
   "block.villagediplomacy.route_signpost": "Route Signpost",
   "screen.villagediplomacy.routes.title": "Trade Routes",
   "screen.villagediplomacy.routes.manage": "Manage routes",
@@ -152,7 +154,7 @@
   "screen.villagediplomacy.trade_handover.next.wait.return_delivery": "Waiting: collect the return goods and go back to the source settlement.",
   "screen.villagediplomacy.trade_handover.next.wait.claim_reward": "Waiting: the reward for this contract is no longer available.",
 
-  "message.villagediplomacy.table.outside_settlement": "The diplomacy table only works inside a registered settlement.",
+  "message.villagediplomacy.table.outside_settlement": "No registered settlement here. Use a Leadership Seal twice on the village bell, then place the table nearby.",
   "message.villagediplomacy.table.too_far": "Place the diplomacy table within 32 blocks of the settlement's central bell.",
   "screen.villagediplomacy.diplomacy_table": "Diplomacy Table",
   "screen.villagediplomacy.table.access.manage": "Leader access",

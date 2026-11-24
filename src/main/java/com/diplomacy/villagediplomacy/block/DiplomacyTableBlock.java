@@ -46,7 +46,7 @@ public final class DiplomacyTableBlock extends Block {
             return;
         }
         if (placer instanceof ServerPlayer serverPlayer) {
-            serverPlayer.displayClientMessage(Component.translatable(messageKey(access.failure())), true);
+            serverPlayer.sendSystemMessage(Component.translatable(messageKey(access.failure())));
         }
         boolean dropTable = !(placer instanceof Player placingPlayer)
                 || !placingPlayer.getAbilities().instabuild;
@@ -76,7 +76,7 @@ public final class DiplomacyTableBlock extends Block {
         SettlementSavedData data = SettlementSavedData.get(serverLevel);
         DiplomacyTableAccess.Result access = DiplomacyTableAccess.evaluate(data, pos);
         if (!access.allowed()) {
-            serverPlayer.displayClientMessage(Component.translatable(messageKey(access.failure())), true);
+            serverPlayer.sendSystemMessage(Component.translatable(messageKey(access.failure())));
             return false;
         }
 

@@ -1,6 +1,7 @@
 package com.diplomacy.villagediplomacy.item;
 
 import com.diplomacy.villagediplomacy.diplomacy.*;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -16,6 +17,8 @@ import net.minecraft.world.level.Level;
 import java.util.List;
 
 public final class TradeRouteMapItem extends Item {
+    private static final String BLANK_MAP_HINT = "tooltip.villagediplomacy.trade_route_map.blank";
+
     public TradeRouteMapItem(Properties properties) {
         super(properties);
     }
@@ -32,6 +35,10 @@ public final class TradeRouteMapItem extends Item {
         ItemStack stack = player.getItemInHand(hand);
         if (player instanceof ServerPlayer serverPlayer) {
             CompoundTag tag = stack.getTag();
+            if (tag == null || !tag.hasUUID("RouteId")) {
+                serverPlayer.sendSystemMessage(Component.translatable(BLANK_MAP_HINT));
+                return InteractionResultHolder.consume(stack);
+            }
             SettlementSavedData data = SettlementSavedData.get(serverPlayer.serverLevel());
             TradeRoute route = TradeRouteMapData.resolve(data, tag, level.dimension().location().toString());
             if (route == null) {
@@ -63,6 +70,8 @@ public final class TradeRouteMapItem extends Item {
             tooltip.add(Component.translatable("screen.villagediplomacy.routes.distance", tag.getLong("Distance"),
                     Component.translatable("status.villagediplomacy.route." + tag.getString("Status"))));
             tooltip.add(Component.literal(tag.getString("Dimension")));
+        } else {
+            tooltip.add(Component.translatable(BLANK_MAP_HINT).withStyle(ChatFormatting.GRAY));
         }
     }
 }

@@ -2,15 +2,22 @@ package com.diplomacy.villagediplomacy.core;
 
 import com.diplomacy.villagediplomacy.VillageDiplomacyMod;
 import com.diplomacy.villagediplomacy.item.TradeRouteMapItem;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
+
+import java.util.List;
 
 public class ModItems {
     public static final DeferredRegister<Item> ITEMS =
@@ -23,7 +30,13 @@ public class ModItems {
             () -> new Item(new Item.Properties().stacksTo(1).rarity(Rarity.RARE)));
 
     public static final RegistryObject<Item> DIPLOMACY_TABLE = ITEMS.register("diplomacy_table",
-            () -> new BlockItem(ModBlocks.DIPLOMACY_TABLE.get(), new Item.Properties()));
+            () -> new BlockItem(ModBlocks.DIPLOMACY_TABLE.get(), new Item.Properties()) {
+                @Override
+                public void appendHoverText(ItemStack stack, Level level, List<Component> tooltip, TooltipFlag flag) {
+                    tooltip.add(Component.translatable("tooltip.villagediplomacy.diplomacy_table.placement")
+                            .withStyle(ChatFormatting.GRAY));
+                }
+            });
 
     public static final RegistryObject<Item> VILLAGE_GUARD_SPAWN_EGG = ITEMS.register("village_guard_spawn_egg",
             () -> new ForgeSpawnEggItem(ModEntities.VILLAGE_GUARD, 0x4f5d73, 0x8b3a3a, new Item.Properties()));
