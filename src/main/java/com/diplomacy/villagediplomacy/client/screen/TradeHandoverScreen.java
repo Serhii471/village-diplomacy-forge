@@ -166,6 +166,7 @@ public final class TradeHandoverScreen extends AbstractContainerScreen<TradeHand
             lines.add(Component.translatable("screen.villagediplomacy.trade_handover.return"));
             contract.returnGoods().forEach(goods -> lines.add(goodsLine(goods)));
         }
+        lines.add(Component.translatable(nextStepKey(contract.phase(), contract.actionable())));
         lines.add(Component.translatable("screen.villagediplomacy.trade_handover.confirmation"));
         return lines;
     }
@@ -182,6 +183,12 @@ public final class TradeHandoverScreen extends AbstractContainerScreen<TradeHand
         }
         return "screen.villagediplomacy.trade_handover.action."
                 + phase.name().toLowerCase(Locale.ROOT);
+    }
+
+    static String nextStepKey(TradeHandoverSnapshot.Phase phase, boolean actionable) {
+        String state = actionable ? "ready" : "wait";
+        return "screen.villagediplomacy.trade_handover.next."
+                + state + "." + phase.name().toLowerCase(Locale.ROOT);
     }
 
     private static String phaseKey(TradeHandoverSnapshot.Phase phase) {
