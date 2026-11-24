@@ -1,34 +1,46 @@
 # v0.1 guard integration package
 
-## Authorized scope — 2026-11-19
+## Current integration — 2026-11-24
+
+- Current base: `10d4fbd1f6f9e162b2501b9333632e9dcd737aeb` (`origin/codex/v0.1-integration`).
+- Current branch: `serhii/v0.1-guards`.
+- The four guard commits were replayed in their original order on the current integration base without importing resident or garrison functionality.
+- The current task explicitly forbids running tests, builds, clients, servers, or GameTests. Therefore the current merged candidate has only been reviewed statically and must be verified manually with `V0.1_MANUAL_TEST_GUIDE_UA.md` before release.
+- Test counts, JAR size/hash, screenshots, and runtime results below are historical evidence from the earlier `daaf840`-based guard package. They do not prove the current integrated commit.
+
+## Original package scope — 2026-11-19
 
 - Prepare four independent local commits for Arthur: patrol/diplomacy, hostile targeting, regional textures/renderer, guard verification.
-- Base: `daaf840b61f2b72dd946e3e4559aea3def095e2c` (`origin/master` at preparation time).
-- Work in `codex/v0.1-guards`, in an isolated managed worktree. Preserve `2nd-test` (`830d027`), local `master`, local `test`, and all unrelated working-tree changes in the original checkout.
-- No merge into master, push, release/tag creation, or message to Arthur is part of this preparation.
+- Original base: `daaf840b61f2b72dd946e3e4559aea3def095e2c` (`origin/master` at preparation time).
+- Original branch: `codex/v0.1-guards`, in an isolated managed worktree. Preserve `2nd-test` (`830d027`), local `master`, local `test`, and all unrelated working-tree changes in the original checkout.
+- The original preparation did not include merging into master, pushing, or creating a release/tag.
 - Source guard behavior from `af6c861`, hostility from `29430e0`, and the pre-garrison uniforms/renderer from `02c4bf0`. Adapt only where the current shared core requires it.
 - Do not import `ResidentData`, resident appearances, recruitment, garrison menus/networking, or their tests. Keep shared trade, menus, localization and settlement persistence unchanged.
 - Runtime: existing Forge loader API, Minecraft 1.20.1 / Forge 47.4.28 / Java 17. No new production dependency or asset generation is needed.
 - Run existing unit tests after each production commit, then isolated guard GameTests, optional disposable-server/two-client uniform checks, and a regular release build/package inspection. Record limitations separately from verified results.
 - Never open original user saves or reuse normal run directories for automated verification. Test worlds/configuration live only under this worktree's ignored `build/` directory.
 
-## C1 — patrol and diplomacy
+## Historical verification on the original base
+
+The following results were recorded for the original `daaf840`-based package and were not rerun after replaying the commits on `10d4fbd`.
+
+### C1 — patrol and diplomacy
 
 - Ported only `VillageGuardEntity` from pre-garrison `af6c861`. No resident snapshot, recruitment, menu, texture or shared-core dependency is added.
 - Baseline `test build --no-daemon --offline`: 89 unit tests passed. C1 `test --no-daemon --offline`: 89 unit tests passed.
 
-## C2 — hostile mob targets
+### C2 — hostile mob targets
 
 - Ported only the two auto-registered `entity/ai` event/goal classes from `29430e0`. No changes to the mod entrypoint, trade, menus or networking.
 - `test --no-daemon --offline`: 89 unit tests passed. Dedicated guard regressions are prepared in C4.
 
-## C3 — regional uniforms
+### C3 — regional uniforms
 
 - Ported the pre-garrison renderer, synchronized specialization field, and four 64×64 runtime PNGs from `02c4bf0`. Armor and outer skin layers remain enabled; missing homes select the base texture.
 - `test --no-daemon --offline`: 89 unit tests passed. PNG headers, hashes and absence of resident/garrison references were checked.
 - Asset provenance remains partly unresolved: original base-skin author/license was not recorded. Preserve this limitation in the handoff; see `docs/development/v0.1-guard-assets.md`.
 
-## C4 — reproducible verification and handoff
+### C4 — reproducible verification and handoff
 
 - Added only guard GameTests (25 cases), the original arena, optional two-client skin harness, isolated Gradle configuration and packaging/verification scripts. Default release builds exclude both optional source sets.
 - Kept the shared build change to one `apply from` statement. The applied verification script resolves ForgeGradle's lazy launch tokens through its plugin classloader; a compile-time class lookup unavailable in applied scripts was corrected before launching clients.

@@ -15,6 +15,8 @@ All notable changes to Village Diplomacy are documented in this file.
 - Persistent trade routes, route maps, configurable road signposts, and marked-route reward bonuses.
 - Leadership Seal, Diplomatic Scroll, Diplomacy Table, Route Signpost, and survival recipes.
 - English and Ukrainian localization.
+- Standalone v0.1 settlement guards with bounded patrols, diplomacy-aware targeting, hostile-mob reactions, synchronized regional uniforms, and four 64×64 runtime textures.
+- Isolated guard GameTests and optional client/server rendering harnesses that are excluded from regular release builds.
 - Automated unit coverage for settlement persistence, production, contracts, handover, agreements, alliances, routes, snapshots, and network action IDs.
 
 ### Changed
@@ -35,6 +37,6 @@ All notable changes to Village Diplomacy are documented in this file.
 
 ### Release validation still required
 
-- Integrate the standalone v0.1 guard patrol, hostility, renderer, textures, and guard tests.
 - Run the complete unit, package, guard GameTest, single-player, dedicated-server, and save/reload checks.
 - Rehearse the presentation using a clean copy of the prepared demo world.
+- Confirm permission or a compatible license for the original base guard skin before public redistribution, or replace it with a cleared asset.

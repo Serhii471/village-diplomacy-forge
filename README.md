@@ -2,7 +2,7 @@
 
 Village Diplomacy is a Minecraft Forge 1.20.1 mod that turns villages into persistent settlements with leaders, resource specializations, physical trade, diplomatic agreements, alliances, routes, and guards.
 
-Version `0.1.0` is currently in integration. The diplomacy and trade core is implemented and tested; the final guard integration and in-game release validation remain before the presentation build is tagged.
+Version `0.1.0` is currently in release-candidate validation. The diplomacy/trade core and the standalone guard package are integrated; the complete automated, single-player, dedicated-server, save/reload, and presentation checks must still be run on the merged commit before tagging.
 
 ## Requirements
 
@@ -30,7 +30,7 @@ Import the project as a Gradle project. ForgeGradle generates machine-local run 
 - **Trade agreements** — propose, accept, decline, withdraw, and terminate persistent agreements with server-side eligibility checks.
 - **Diplomatic alliances** — unlock alliance benefits after trade, reputation, and successful-delivery requirements are met.
 - **Routes and maps** — create persistent routes, issue route maps, and configure road signposts with direction and distance labels.
-- **Settlement guards** — the final v0.1 candidate will include bounded patrol, diplomacy-aware targeting, hostile-mob reactions, and regional guard textures.
+- **Settlement guards** — bounded patrol, diplomacy-aware targeting, hostile-mob reactions, and four specialization-aware regional textures.
 
 ## Main items and blocks
 
@@ -51,13 +51,14 @@ The regular unit and package check is:
 .\gradlew.bat test build --no-daemon
 ```
 
-The release is not considered complete until the integrated candidate also passes its guard GameTests, a single-player smoke test, a dedicated-server smoke test, save/reload verification, and the complete presentation rehearsal.
+The release is not considered complete until the integrated candidate passes its guard GameTests, a single-player smoke test, a dedicated-server smoke test, save/reload verification, and the complete presentation rehearsal. Follow [`V0.1_MANUAL_TEST_GUIDE_UA.md`](V0.1_MANUAL_TEST_GUIDE_UA.md) and record the exact commit and JAR hash that were tested.
 
 ## Documentation
 
 - [`docs/design/v0.1-concept.md`](docs/design/v0.1-concept.md) — approved gameplay scope and readiness criteria.
 - [`docs/demo/v0.1-presentation-runbook.md`](docs/demo/v0.1-presentation-runbook.md) — deterministic demo-world setup and rehearsal sequence.
 - [`V0.1_AUDIT_AND_COMPLETION_GUIDE_UA.md`](V0.1_AUDIT_AND_COMPLETION_GUIDE_UA.md) — team responsibilities and integration checklist in Ukrainian.
+- [`V0.1_MANUAL_TEST_GUIDE_UA.md`](V0.1_MANUAL_TEST_GUIDE_UA.md) — complete manual release-candidate verification in Ukrainian.
 - [`CHANGELOG.md`](CHANGELOG.md) — release-facing change history.
 
 ## Roadmap
