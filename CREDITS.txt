@@ -62,6 +62,22 @@ with credit to it's authors.
 
 =========================================================================
 
+Village Diplomacy contributors
+
+Arthur:
+- Settlement registration and specialization
+- Production and virtual warehouse systems
+- Physical trade contracts and handover
+- Trade agreements, alliances, routes, GUI, and networking
+- Version 0.1 integration
+
+Serhii:
+- Initial Forge scaffold and village guard entity
+- Guard patrol, hostile-mob interaction, and regional guard assets
+- Human resident and garrison research for the 0.2.x line
+
+=========================================================================
+
 Village Diplomacy texture credits
 
 Route signpost board and post textures are adapted from the baobab wood

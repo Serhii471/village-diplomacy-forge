@@ -6,14 +6,12 @@ bin
 .classpath
 .project
 
-# idea
+# IntelliJ IDEA (run configurations are generated per machine by ForgeGradle)
 out
 *.ipr
 *.iws
 *.iml
-# keep run configs but ignore rest of .idea
-.idea/*
-!.idea/runConfigurations/
+.idea/
 
 # gradle
 build
@@ -22,7 +20,10 @@ build
 # other
 eclipse
 run
+run-data/
 logs
+*.log
+*.hprof
 
 # Files from Forge MDK
 forge*changelog.txt
