@@ -2,6 +2,12 @@
 
 All notable changes to Village Diplomacy are documented in this file.
 
+## 0.2.3 Unreleased
+
+- Build surface roads between generated Overworld villages within 1,000 horizontal blocks, independent of diplomacy registration.
+- Prefer open-land detours around lakes and forests. Leave water clear and mark mountain passes with compass signs.
+- Save pending construction and apply it in loaded chunks in small batches.
+
 ## 0.2.2 Unreleased
 
 - Add the village guard spawn egg's inventory model using the vanilla tinted egg template.

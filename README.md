@@ -2,7 +2,7 @@
 
 Village Diplomacy is a Minecraft Forge 1.20.1 mod that turns villages into persistent settlements with leaders, resource specializations, physical trade, diplomatic agreements, alliances, routes, and guards.
 
-Version `0.2.2` includes the diplomacy and trade core, settlement guards, human-looking residents, and garrison management.
+Version `0.2.3` adds terrain-aware roads between generated villages to the diplomacy, trade, and residents systems.
 
 ## Requirements
 
@@ -31,7 +31,9 @@ Import the project as a Gradle project. ForgeGradle generates machine-local run 
 - **Diplomatic alliances** — unlock alliance benefits after trade, reputation, and successful-delivery requirements are met.
 - **Routes and maps** — create persistent routes, issue route maps, and configure road signposts with direction and distance labels.
 
-To start a route, register your home with the Leadership Seal, discover another settlement by using a Diplomatic Scroll on its bell, then create the route and collect its map at your diplomacy table. Physical roads are built by players.
+To start a trade route, register your home with the Leadership Seal, discover another settlement by using a Diplomatic Scroll on its bell, then create the route and collect its map at your diplomacy table.
+
+Physical roads use vanilla village structure starts in the Overworld. Once both village starts have been loaded, a pair up to 1000 blocks apart gets a terrain-aware road. Sections are placed as their chunks load. Roads prefer open land, use dirt paths, coarse dirt and gravel, leave water clear, and mark steep mountain gaps with compass directions. Existing worlds can gain roads as their village chunks load.
 - **Settlement guards** — bounded patrol, diplomacy-aware targeting, hostile-mob reactions, and four specialization-aware regional textures.
 
 ## Main items and blocks
