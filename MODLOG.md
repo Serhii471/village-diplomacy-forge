@@ -38,7 +38,7 @@ The following results were recorded for the original `daaf840`-based package and
 
 - Ported the pre-garrison renderer, synchronized specialization field, and four 64×64 runtime PNGs from `02c4bf0`. Armor and outer skin layers remain enabled; missing homes select the base texture.
 - `test --no-daemon --offline`: 89 unit tests passed. PNG headers, hashes and absence of resident/garrison references were checked.
-- Asset provenance remains partly unresolved: original base-skin author/license was not recorded. Preserve this limitation in the handoff; see `docs/development/v0.1-guard-assets.md`.
+- The original package did not record base-skin redistribution permission. Serhii confirmed the necessary rights on 2026-11-24; see `docs/development/v0.1-guard-assets.md`.
 
 ### C4 — reproducible verification and handoff
 
@@ -47,5 +47,5 @@ The following results were recorded for the original `daaf840`-based package and
 - New-base `test build --no-daemon --offline`: PASS; all 89 existing unit tests have zero failures/errors/skips. Guard GameTest server: all 25 required scenarios passed in a fresh world.
 - Two independent Forge dev clients and a dedicated localhost server passed initial, changed, removed-home and full server restart/reconnect phases. All four Java test processes exited normally. Actual production renderer paths, four skins, outer layers and real chainmail were checked. Initial and reloaded raw Minecraft screenshots were visually inspected.
 - Regular JAR: `build/libs/villagediplomacy-0.1.0.jar`, 297231 bytes, SHA-256 `24ea2a66fbc295b25caf2577e87c4757e7048676a4904935d219db68bf12ee42`. Exact four PNGs present; GameTest/harness code, test arenas and resident/garrison assets/classes absent. Trade screens and DiplomacyNetwork retained.
-- Full diplomacy/trade presentation playthrough and combat animations were not exercised. Base-skin permission remains unresolved. This candidate is not a public release.
+- Full diplomacy/trade presentation playthrough and combat animations were not exercised in the historical package. This candidate was not a public release.
 - Verification evidence is generated in ignored `build/`; the handoff export includes only four patches, a Git bundle, candidate JAR, concise reports and two screenshots. It excludes launch manifests (which contain local environment variables), worlds, configs, logs and caches.

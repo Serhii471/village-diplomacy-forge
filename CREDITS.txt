@@ -80,6 +80,11 @@ Serhii:
 
 Village Diplomacy texture credits
 
+The four regional guard textures are derived from a base skin supplied by
+Serhii. On 2026-11-24 Serhii confirmed that he has the necessary rights to use
+and redistribute the base skin in Village Diplomacy. The derived textures are
+distributed with the mod and are not offered as a separately reusable asset.
+
 Route signpost board and post textures are adapted from the baobab wood
 textures in Auseawesome's Minecraft Textures repository:
 https://github.com/Auseawesome/Minecraft-Textures
