@@ -39,4 +39,3 @@ All notable changes to Village Diplomacy are documented in this file.
 
 - Run the complete unit, package, guard GameTest, single-player, dedicated-server, and save/reload checks.
 - Rehearse the presentation using a clean copy of the prepared demo world.
-- Confirm permission or a compatible license for the original base guard skin before public redistribution, or replace it with a cleared asset.
