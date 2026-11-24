@@ -24,7 +24,9 @@ import net.minecraft.world.entity.monster.hoglin.Hoglin;
 import net.minecraft.world.entity.monster.piglin.PiglinBrute;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.LightBlock;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.gametest.GameTestHolder;
 import net.minecraftforge.gametest.PrefixGameTestTemplate;
@@ -120,24 +122,32 @@ public final class HostileMobGuardGameTests {
         succeedsWhenGuardIsHurt(helper, guard, "Darkness must allow a spider to approach and bite a guard");
     }
 
-    @GameTest(batch = "hostile_guards_brightSpiderDoesNotBecomeAggressive", template = ARENA, timeoutTicks = 100)
+    @GameTest(batch = "hostile_guards_brightSpiderDoesNotBecomeAggressive", template = ARENA, timeoutTicks = 160)
     public static void brightSpiderDoesNotBecomeAggressive(GameTestHelper helper) {
         VillageGuardEntity guard = passiveGuard(helper);
-        helper.setBlock(6, 3, 3, Blocks.GLOWSTONE);
-        Spider spider = helper.spawn(EntityType.SPIDER, 6, 2, 3);
-        // Keep the spider under the light while retaining its actual target selection.
-        spider.setNoGravity(true);
-        helper.onEachTick(() -> {
-            spider.setDeltaMovement(Vec3.ZERO);
-            BlockPos position = helper.absolutePos(new BlockPos(6, 2, 3));
-            spider.moveTo(position.getX(), position.getY(), position.getZ());
-        });
-        helper.runAfterDelay(60, () -> {
-            helper.assertTrue(spider.getLightLevelDependentMagicValue() >= 0.5F, "Fixture must be bright");
-            helper.assertTrue(spider.getTarget() == null, "Bright spider must retain its neutral behavior");
-            helper.assertTrue(guard.getHealth() == guard.getMaxHealth(), "Bright spider must not damage guard");
-            helper.succeed();
-        });
+        BlockPos spiderPos = new BlockPos(6, 2, 3);
+        BlockPos lightPos = helper.absolutePos(spiderPos);
+        helper.setBlock(spiderPos, Blocks.LIGHT.defaultBlockState().setValue(LightBlock.LEVEL, 15));
+        helper.startSequence()
+                .thenWaitUntil(() -> helper.assertTrue(
+                        helper.getLevel().getBrightness(LightLayer.BLOCK, lightPos) == 15,
+                        "Fixture light must propagate before the spider spawns"))
+                .thenExecute(() -> {
+                    Spider spider = helper.spawn(EntityType.SPIDER, 6, 2, 3);
+                    Vec3 center = Vec3.atBottomCenterOf(lightPos);
+                    // Keep both the spider and its eyes inside the non-colliding light block.
+                    spider.setNoGravity(true);
+                    helper.onEachTick(() -> {
+                        spider.setDeltaMovement(Vec3.ZERO);
+                        spider.moveTo(center.x, center.y, center.z);
+                    });
+                    helper.runAfterDelay(60, () -> {
+                        helper.assertTrue(spider.getLightLevelDependentMagicValue() >= 0.5F, "Fixture must be bright");
+                        helper.assertTrue(spider.getTarget() == null, "Bright spider must retain its neutral behavior");
+                        helper.assertTrue(guard.getHealth() == guard.getMaxHealth(), "Bright spider must not damage guard");
+                        helper.succeed();
+                    });
+                });
     }
 
     @GameTest(batch = "hostile_guards_slimeChasesAndDealsContactDamage", template = ARENA, timeoutTicks = 200)
