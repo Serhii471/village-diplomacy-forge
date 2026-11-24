@@ -148,12 +148,25 @@ public final class HostileMobGuardGameTests {
         succeedsWhenGuardIsHurt(helper, guard, "Slime must both chase a guard and deal contact damage");
     }
 
-    @GameTest(batch = "hostile_guards_magmaCubeChasesAndDealsContactDamage", template = ARENA, timeoutTicks = 240)
+    @GameTest(batch = "hostile_guards_magmaCubeChasesAndDealsContactDamage", template = ARENA, timeoutTicks = 400)
     public static void magmaCubeChasesAndDealsContactDamage(GameTestHelper helper) {
+        // Keep random hops on the test platform while the cube finds a target.
+        for (int y = 2; y <= 4; y++) {
+            for (int x = 2; x <= 7; x++) {
+                helper.setBlock(x, y, 1, Blocks.GLASS);
+                helper.setBlock(x, y, 5, Blocks.GLASS);
+            }
+            for (int z = 2; z <= 4; z++) {
+                helper.setBlock(2, y, z, Blocks.GLASS);
+                helper.setBlock(7, y, z, Blocks.GLASS);
+            }
+        }
         VillageGuardEntity guard = passiveGuard(helper);
         MagmaCube cube = helper.spawn(EntityType.MAGMA_CUBE, 6, 2, 3);
         cube.setSize(2, true);
-        succeedsWhenGuardIsHurt(helper, guard, "Magma cube must chase a guard and deal contact damage");
+        helper.succeedWhen(() -> helper.assertTrue(guard.getHealth() < guard.getMaxHealth(),
+                "Magma cube must chase and hurt the guard: target=" + cube.getTarget()
+                        + ", cube=" + cube.position() + ", guard=" + guard.position()));
     }
 
     @GameTest(batch = "hostile_guards_hoglinUsesBrainToAttackGuard", template = ARENA, timeoutTicks = 160)
