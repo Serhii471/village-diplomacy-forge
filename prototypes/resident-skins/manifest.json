@@ -1,7 +1,7 @@
 {
   "source": "source/civilian-generated.png",
   "method": "Built-in ImageGen edit, nearest-neighbour UV fitting, source-head preservation and deterministic palette/outfit variants",
-  "headSource": "../guard-skins/guard_base.png",
+  "headSource": "../../src/main/resources/assets/villagediplomacy/textures/entity/guard/guard_base.png",
   "variants": [
     {
       "name": "plains_worker_0",

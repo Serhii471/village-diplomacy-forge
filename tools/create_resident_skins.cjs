@@ -6,6 +6,7 @@ let sharp;try{sharp=require('sharp');}catch{sharp=require(path.join(process.env.
 const out='prototypes/resident-skins';
 const resource='src/main/resources/assets/villagediplomacy/textures/entity/resident';
 const guardResource='src/main/resources/assets/villagediplomacy/textures/entity/guard';
+const headSource=path.join(guardResource,'guard_base.png');
 const palettes={plains:{shirt:[222,207,168],vest:[113,68,49]},mountain:{shirt:[176,188,194],vest:[63,78,94]},forest:{shirt:[158,174,130],vest:[62,89,52]}};
 const cap=n=>Math.max(0,Math.min(255,Math.round(n)));
 function faceColor(rgb,face){
@@ -22,7 +23,7 @@ function project(png,name){return {meta:{format_version:'5.0',model_format:'skin
 (async()=>{
  fs.mkdirSync(out,{recursive:true});fs.mkdirSync(resource,{recursive:true});
  const source=await sharp(out+'/source/civilian-generated.png').resize(64,64,{kernel:'nearest'}).ensureAlpha().raw().toBuffer();
- const head=await sharp('prototypes/guard-skins/guard_base.png').ensureAlpha().raw().toBuffer();
+ const head=await sharp(headSource).ensureAlpha().raw().toBuffer();
  const base=Buffer.from(source);
  // Opaque only on the six base cuboids. Generated edge pixels in unused/outer
  // UV regions must never become holes or accidental extra clothing layers.
@@ -68,7 +69,7 @@ function project(png,name){return {meta:{format_version:'5.0',model_format:'skin
   const png=await sharp(raw,{raw:{width:64,height:64,channels:4}}).png().toBuffer();
   fs.writeFileSync(`${guardResource}/guard_${type}_face_${face}.png`,png);
  }
- fs.writeFileSync(out+'/manifest.json',JSON.stringify({source:'source/civilian-generated.png',method:'Built-in ImageGen edit, nearest-neighbour UV fitting, source-head preservation and deterministic palette/outfit variants',headSource:'../guard-skins/guard_base.png',variants:records},null,2));
+ fs.writeFileSync(out+'/manifest.json',JSON.stringify({source:'source/civilian-generated.png',method:'Built-in ImageGen edit, nearest-neighbour UV fitting, source-head preservation and deterministic palette/outfit variants',headSource:path.relative(out,headSource).split(path.sep).join('/'),variants:records},null,2));
  // Retire only the two previously generated group outfits, never arbitrary
  // files or manually authored projects in this directory.
  for(const region of Object.keys(palettes))for(const old of ['smith','scholar'])for(let face=0;face<3;face++){

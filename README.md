@@ -2,7 +2,7 @@
 
 Village Diplomacy is a Minecraft Forge 1.20.1 mod that turns villages into persistent settlements with leaders, resource specializations, physical trade, diplomatic agreements, alliances, routes, and guards.
 
-Version `0.1.0` is currently in release-candidate validation. The diplomacy/trade core and the standalone guard package are integrated; the complete automated, single-player, dedicated-server, save/reload, and presentation checks must still be run on the merged commit before tagging.
+Version `0.2.1` brings together the diplomacy and trade core, settlement guards, human-looking residents, and garrison management.
 
 ## Requirements
 
@@ -19,7 +19,7 @@ Version `0.1.0` is currently in release-candidate validation. The diplomacy/trad
 
 Import the project as a Gradle project. ForgeGradle generates machine-local run configurations, so `.idea/runConfigurations` is intentionally not tracked.
 
-## Version 0.1 scope
+## Diplomacy, trade, and guards
 
 - **Settlements and leadership** — claim a settlement at its central Bell, with all leadership permissions checked on the server.
 - **Terrain specializations** — plains, mountain, forest, and mixed settlements receive persistent production profiles.
@@ -43,14 +43,14 @@ Import the project as a Gradle project. ForgeGradle generates machine-local run 
 | Route Signpost | Bind to a known settlement and display direction, distance, relations, and route state. |
 | Village Guard Spawn Egg | Creative-only development item for spawning a guard. |
 
-### Residents and garrison (0.2.1)
+## Residents and garrison
+
 - **Human residents** — vanilla villagers retain their professions, trading and breeding while using human models, regional clothing and stable identity palettes.
 - **Recognizable professions** — all 13 vanilla trading professions have individual outfits and pixel accessories: smiths wear tool aprons, librarians carry a book motif and glasses, farmers wear straw caps, and other trades have their own colors and emblems. Three regions and three identity palettes provide 135 outfits, including unemployed residents and nitwits. Clothing updates when a villager changes profession.
 - **Resident recruitment** — open the diplomacy table's Garrison, supply a chosen sword, chestplate and six bread, and train an adult unemployed resident for one game day. Queued recruits count toward the 25% military cap; at least four adult civilians must remain.
 - **Reversible service** — the soldier retains the original resident's name and face. Cancel training to refund supplies, or demobilize a recruited soldier to restore the original villager and return current equipment once. Training and origin data survive saving/loading.
 
-See [resident and garrison behavior, screenshots and verification](docs/development/residents-garrison.md).
-
+See [resident and garrison behavior](docs/development/residents-garrison.md) and [profession outfit details](docs/development/resident-professions.md).
 
 ## Verification
 
@@ -60,7 +60,7 @@ The regular unit and package check is:
 .\gradlew.bat test build --no-daemon
 ```
 
-The release is not considered complete until the integrated candidate passes its guard GameTests, a single-player smoke test, a dedicated-server smoke test, save/reload verification, and the complete presentation rehearsal. Follow [`V0.1_MANUAL_TEST_GUIDE_UA.md`](V0.1_MANUAL_TEST_GUIDE_UA.md) and record the exact commit and JAR hash that were tested.
+Run the isolated Forge GameTests for guards and recruitment with `.\gradlew.bat -PguardGameTests runGameTestServer --offline`. The client scenarios in the documentation cover the corresponding in-game rendering and save/reload checks.
 
 ## Documentation
 
@@ -76,12 +76,11 @@ The release is not considered complete until the integrated candidate passes its
 - [ ] Courier / Trade caravan AI
 - [ ] Autonomous events (raids, siege, allied reinforcements)
 - [ ] Village auto-detection on world load
-- [ ] Human residents, professions, recruitment, and garrison management (`0.2.x`)
 
 ## Authors
 
 - Arthur — settlement, production, trade, diplomacy, route, GUI, networking, and integration work.
-- Serhii — initial Forge scaffold, guard systems, resident and garrison research, and visual assets.
+- Serhii — initial Forge scaffold, guard systems, resident and garrison features, and visual assets.
 
 ## License
 

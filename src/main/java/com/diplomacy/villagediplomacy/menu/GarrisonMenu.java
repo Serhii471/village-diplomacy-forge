@@ -1,5 +1,6 @@
 package com.diplomacy.villagediplomacy.menu;
 
+import com.diplomacy.villagediplomacy.block.DiplomacyTableBlock;
 import com.diplomacy.villagediplomacy.core.ModBlocks;
 import com.diplomacy.villagediplomacy.core.ModMenus;
 import com.diplomacy.villagediplomacy.diplomacy.DiplomacyTableAccess;
@@ -76,16 +77,10 @@ public final class GarrisonMenu extends AbstractContainerMenu {
                 || DiplomacyTableAccess.evaluate(SettlementSavedData.get(level), table).allowed());
     }
     @Override public boolean clickMenuButton(Player player, int button) {
-        if (!(player instanceof ServerPlayer serverPlayer) || !stillValid(player)) return false;
-        if (button == BACK) {
-            var access = DiplomacyTableAccess.evaluate(SettlementSavedData.get(serverPlayer.serverLevel()), table);
-            if (!access.allowed()) return false;
-            var main = DiplomacyTableSnapshot.create(serverPlayer.serverLevel(), serverPlayer, access.settlement());
-            NetworkHooks.openScreen(serverPlayer, new SimpleMenuProvider((id, inventory, ignored) ->
-                    new DiplomacyTableMenu(id, inventory, table, main), Component.translatable("screen.villagediplomacy.diplomacy_table")),
-                    buffer -> { buffer.writeBlockPos(table); main.write(buffer); });
-            return true;
+        if (!(player instanceof ServerPlayer serverPlayer) || player.containerMenu != this || !stillValid(player)) {
+            return false;
         }
+        if (button == BACK) return DiplomacyTableBlock.openFor(serverPlayer, table);
         if (button == REFRESH) { open(serverPlayer, table, ""); return true; }
         int index = button - ACTION_BASE;
         if (index < 0 || index >= snapshot.entries().size()) return false;

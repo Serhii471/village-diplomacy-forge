@@ -2,6 +2,13 @@
 
 All notable changes to Village Diplomacy are documented in this file.
 
+## 0.2.1 Unreleased
+
+- Show the next available step in the contract handover screen.
+- Render villagers with regional outfits for every vanilla profession and stable identities.
+- Train, cancel training for, and demobilize residents through the diplomacy table's Garrison screen. Training preserves the villager's identity and uses supplied gear.
+- Keep the Garrison action on the Settlement tab so trade, diplomacy, and route controls remain accessible.
+
 ## 0.1.0 Unreleased
 
 ### Added
