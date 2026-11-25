@@ -31,6 +31,9 @@ def main():
     allowed_java = {
         'src/main/java/com/diplomacy/villagediplomacy/entity/VillageGuardEntity.java',
         'src/main/java/com/diplomacy/villagediplomacy/client/renderer/VillageGuardRenderer.java',
+        'src/main/java/com/diplomacy/villagediplomacy/client/screen/DiplomacyTableScreen.java',
+        'src/main/java/com/diplomacy/villagediplomacy/client/screen/RouteScreen.java',
+        'src/main/java/com/diplomacy/villagediplomacy/client/screen/TradeHandoverScreen.java',
         'src/main/java/com/diplomacy/villagediplomacy/entity/ai/GuardHostilityEvents.java',
         'src/main/java/com/diplomacy/villagediplomacy/entity/ai/GuardTargetGoal.java',
     }
