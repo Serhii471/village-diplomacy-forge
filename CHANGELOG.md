@@ -35,6 +35,7 @@ All notable changes to Village Diplomacy are documented in this file.
 - Preserved selected trade-offer state across GUI refreshes.
 - Prevented large menu action IDs from being truncated in vanilla button packets.
 - Added the missing item model for the Village Guard Spawn Egg, removing the missing-model warning and restoring its inventory icon.
+- Made release JAR creation reproducible by removing the build timestamp and normalizing archive order and entry timestamps.
 
 ### Validation completed
 

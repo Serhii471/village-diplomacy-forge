@@ -9,7 +9,7 @@
 - The real Forge client exposed a missing Village Guard Spawn Egg item model; `2a145a8` adds the standard spawn-egg model and makes the package verifier require it.
 - Final automated evidence: 89 unit tests passed, all 25 required guard GameTests passed, and the dedicated-server/two-client guard harness passed all phases including full server restart/reconnect.
 - Real-client smoke evidence: metadata, item icon, leadership, specialization, discovery, all four Diplomacy Table tabs, guard spawn/rendering, and save/reload passed. The final client log contained no new error, exception, missing-model, or crash entry.
-- Verified regular JAR: `build/libs/villagediplomacy-0.1.0.jar`, 314138 bytes, SHA-256 `9a2127544e6be7ee7a98aa292baa69c0aa6ca700b8d6e21fe73e8ce02c2c9369`.
+- Verified reproducible JAR: `build/libs/villagediplomacy-0.1.0.jar`, 314108 bytes, SHA-256 `095c4f0063811fe88fdc792cea433319d9fec52d0d3a2ce83d2a0926d8cce8f3`; two forced rebuilds produced identical bytes.
 - Remaining human acceptance is intentionally separate: full partial-handover/reward presentation, agreements/alliances/routes, and combat-animation rehearsal.
 
 ## Original package scope — 2026-11-19
