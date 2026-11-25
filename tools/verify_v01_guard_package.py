@@ -56,8 +56,18 @@ def main():
                      'DiplomacyTableScreen.class', 'TradeHandoverScreen.class', 'RouteScreen.class', 'DiplomacyNetwork.class'):
             assert any(p.endswith('/' + name) for p in entries), name
 
-    client_result = ROOT / 'build/v01-guard-client-check/result.json'
-    client = json.loads(client_result.read_text()) if client_result.exists() else {'passed': False, 'reason': 'not run'}
+        spawn_egg_model = 'assets/villagediplomacy/models/item/village_guard_spawn_egg.json'
+        assert spawn_egg_model in entries, spawn_egg_model
+        model = json.loads(archive.read(spawn_egg_model))
+        assert model == {'parent': 'item/template_spawn_egg'}, model
+
+    client_results = (
+        ROOT / 'build/v01-release-client-check/result.json',
+        ROOT / 'build/v01-guard-client-check/result.json',
+    )
+    client_result = next((path for path in client_results if path.exists()), None)
+    client = (json.loads(client_result.read_text(encoding='utf-8')) if client_result
+              else {'passed': False, 'reason': 'not run'})
     report = {
         'base': BASE, 'head': git('rev-parse', 'HEAD'), 'branch': git('branch', '--show-current'),
         'unitTests': units, 'requiredGameTests': 25, 'clients': client,
@@ -65,8 +75,8 @@ def main():
                     'sha256': hashlib.sha256(jar.read_bytes()).hexdigest(),
                     'testCodeAbsent': True, 'residentCodeAbsent': True},
         'textures': textures,
-        'limitations': ['Base-skin original author/license is unresolved.',
-                        'No full diplomacy/trade presentation playthrough or combat-animation verification.'],
+        'limitations': ['No end-to-end trade-contract completion was performed in the real client.',
+                        'No combat-animation verification was performed in the real client.'],
     }
     destination = ROOT / 'build/v01-guard-verification.json'
     destination.write_text(json.dumps(report, indent=2, ensure_ascii=False), encoding='utf-8')
