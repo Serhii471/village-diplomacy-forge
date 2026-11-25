@@ -2,7 +2,7 @@
 
 Village Diplomacy is a Minecraft Forge 1.20.1 mod that turns villages into persistent settlements with leaders, resource specializations, physical trade, diplomatic agreements, alliances, routes, and guards.
 
-Version `0.1.0` is currently in release-candidate validation. The diplomacy/trade core and the standalone guard package are integrated; the complete automated, single-player, dedicated-server, save/reload, and presentation checks must still be run on the merged commit before tagging.
+Version `0.1.0` is an integrated release candidate. The diplomacy/trade core and the standalone guard package have passed the automated suite, guard GameTests, a two-client guard-rendering check, and a real-client single-player smoke test. The full presentation rehearsal and an end-to-end real-client trade-contract run remain release acceptance steps.
 
 ## Requirements
 
@@ -51,7 +51,7 @@ The regular unit and package check is:
 .\gradlew.bat test build --no-daemon
 ```
 
-The release is not considered complete until the integrated candidate passes its guard GameTests, a single-player smoke test, a dedicated-server smoke test, save/reload verification, and the complete presentation rehearsal. Follow [`V0.1_MANUAL_TEST_GUIDE_UA.md`](V0.1_MANUAL_TEST_GUIDE_UA.md) and record the exact commit and JAR hash that were tested.
+The verified candidate passed 89 unit tests, 25 required guard GameTests, a localhost dedicated-server/two-client guard check with a full server restart, package inspection, and a real Forge-client smoke test including save/reload. The remaining human acceptance scope is the complete presentation flow, especially partial contract handover, one-time reward, agreements, alliances, routes, and combat animation. Follow [`V0.1_MANUAL_TEST_GUIDE_UA.md`](V0.1_MANUAL_TEST_GUIDE_UA.md) and record the exact commit and JAR hash that were tested.
 
 ## Documentation
 

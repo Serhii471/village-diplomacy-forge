@@ -2,7 +2,7 @@
 
 All notable changes to Village Diplomacy are documented in this file.
 
-## 0.1.0 Unreleased
+## 0.1.0 Release candidate
 
 ### Added
 
@@ -34,8 +34,17 @@ All notable changes to Village Diplomacy are documented in this file.
 - Preserved delivered goods in destination storage.
 - Preserved selected trade-offer state across GUI refreshes.
 - Prevented large menu action IDs from being truncated in vanilla button packets.
+- Added the missing item model for the Village Guard Spawn Egg, removing the missing-model warning and restoring its inventory icon.
 
-### Release validation still required
+### Validation completed
 
-- Run the complete unit, package, guard GameTest, single-player, dedicated-server, and save/reload checks.
-- Rehearse the presentation using a clean copy of the prepared demo world.
+- 89 unit tests passed with zero failures, errors, or skipped tests.
+- All 25 required guard GameTests passed in a fresh disposable world.
+- A localhost dedicated server and two Forge clients passed guard texture, armor-layer, live specialization, fallback, reconnect, and full server-restart checks.
+- The regular JAR passed package inspection: all four 64×64 guard textures and the spawn-egg model are present; GameTest, harness, resident, and garrison content are absent.
+- A real Forge client passed mod metadata, item/model, leadership, settlement discovery, Diplomacy Table, guard spawning, and save/reload smoke checks without a new error or stack trace in the final client log.
+
+### Human acceptance still required
+
+- Rehearse partial contract handover, one-time reward, agreements, alliances, route/map/signpost flow, and guard combat animation using a clean copy of the presentation world.
+- Perform the final two-person presentation rehearsal before publishing the GitHub Release.

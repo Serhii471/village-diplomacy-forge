@@ -1,12 +1,16 @@
 # v0.1 guard integration package
 
-## Current integration — 2026-11-24
+## Current release candidate — 2026-11-25
 
-- Current base: `10d4fbd1f6f9e162b2501b9333632e9dcd737aeb` (`origin/codex/v0.1-integration`).
-- Current branch: `serhii/v0.1-guards`.
-- The four guard commits were replayed in their original order on the current integration base without importing resident or garrison functionality.
-- The current task explicitly forbids running tests, builds, clients, servers, or GameTests. Therefore the current merged candidate has only been reviewed statically and must be verified manually with `V0.1_MANUAL_TEST_GUIDE_UA.md` before release.
-- Test counts, JAR size/hash, screenshots, and runtime results below are historical evidence from the earlier `daaf840`-based guard package. They do not prove the current integrated commit.
+- Release base: `6a88cf80b64909acf84a45da323c803860e8cdaf` (standalone v0.1 integration merge).
+- Release branch: `release/v0.1`.
+- The guard package remains isolated from resident, profession, recruitment, and garrison functionality planned for 0.2.x.
+- The confirmed guard-skin redistribution permission is recorded in `docs/development/v0.1-guard-assets.md` and `CREDITS.txt`.
+- The real Forge client exposed a missing Village Guard Spawn Egg item model; `2a145a8` adds the standard spawn-egg model and makes the package verifier require it.
+- Final automated evidence: 89 unit tests passed, all 25 required guard GameTests passed, and the dedicated-server/two-client guard harness passed all phases including full server restart/reconnect.
+- Real-client smoke evidence: metadata, item icon, leadership, specialization, discovery, all four Diplomacy Table tabs, guard spawn/rendering, and save/reload passed. The final client log contained no new error, exception, missing-model, or crash entry.
+- Verified regular JAR: `build/libs/villagediplomacy-0.1.0.jar`, 314138 bytes, SHA-256 `9a2127544e6be7ee7a98aa292baa69c0aa6ca700b8d6e21fe73e8ce02c2c9369`.
+- Remaining human acceptance is intentionally separate: full partial-handover/reward presentation, agreements/alliances/routes, and combat-animation rehearsal.
 
 ## Original package scope — 2026-11-19
 
