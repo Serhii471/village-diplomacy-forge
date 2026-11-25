@@ -16,6 +16,7 @@ import java.util.Map;
 import java.util.Set;
 
 final class VillageRoadData extends SavedData {
+    static final String STORAGE_KEY = "village_diplomacy_roads";
     private static final long MAX_DISTANCE_SQUARED = 1_000L * 1_000;
 
     record Link(BlockPos first, BlockPos second) {
@@ -32,8 +33,7 @@ final class VillageRoadData extends SavedData {
     private final Map<Long, ArrayDeque<Plot>> pending = new LinkedHashMap<>();
 
     static VillageRoadData get(ServerLevel level) {
-        return level.getDataStorage().computeIfAbsent(VillageRoadData::load, VillageRoadData::new,
-                "village_diplomacy_roads");
+        return level.getDataStorage().computeIfAbsent(VillageRoadData::load, VillageRoadData::new, STORAGE_KEY);
     }
 
     void discover(BlockPos location) {

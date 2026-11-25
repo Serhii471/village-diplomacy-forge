@@ -16,6 +16,7 @@ import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructureStart;
 import net.minecraft.world.level.levelgen.structure.pieces.PiecesContainer;
 import net.minecraft.world.level.levelgen.structure.structures.BuriedTreasurePieces;
+import net.minecraftforge.event.level.LevelEvent;
 import net.minecraftforge.gametest.GameTestHolder;
 import net.minecraftforge.gametest.PrefixGameTestTemplate;
 
@@ -27,11 +28,20 @@ public final class VillageRoadGameTests {
     @GameTest(template = "guard_arena", batch = "generated_roads", timeoutTicks = 400)
     public static void villageStartsBuildRoadOnBothBanksWithoutFillingWater(GameTestHelper helper) {
         ServerLevel level = helper.getLevel();
-        BlockPos west = level.getHeightmapPos(Heightmap.Types.WORLD_SURFACE,
-                helper.absolutePos(new BlockPos(4, 5, 25))).below();
+        BlockPos origin = helper.absolutePos(new BlockPos(4, 5, 25));
+        // Start on the planner's eight-block sample grid. The water strip then
+        // falls between two survey columns, so this tests the paving check even
+        // when the arena's absolute position changes with the test order.
+        BlockPos aligned = new BlockPos(Math.floorDiv(origin.getX(), 8) * 8 + 4, origin.getY(),
+                Math.floorDiv(origin.getZ(), 8) * 8 + 4);
+        int surfaceY = level.getMinBuildHeight();
+        for (BlockPos pos : BlockPos.betweenClosed(aligned.north(6), aligned.east(40).south(6))) {
+            surfaceY = Math.max(surfaceY, level.getHeight(Heightmap.Types.WORLD_SURFACE, pos.getX(), pos.getZ()));
+        }
+        BlockPos west = aligned.atY(surfaceY + 1);
         BlockPos east = west.east(40);
-        // The normal flat GameTest generator has no villages. Add two tagged
-        // structure-start records and a small strip of realistic surface terrain.
+        // Build the whole fixture above the generated terrain so hills cannot
+        // cover either bank. Add two tagged village starts to exercise discovery.
         for (BlockPos pos : BlockPos.betweenClosed(west.north(6), east.south(6))) {
             Block block = pos.getX() >= west.getX() + 18 && pos.getX() <= west.getX() + 21
                     ? Blocks.WATER : Blocks.GRASS_BLOCK;
@@ -41,6 +51,10 @@ public final class VillageRoadGameTests {
         var plainsVillage = level.registryAccess().registryOrThrow(Registries.STRUCTURE)
                 .get(ResourceLocation.fromNamespaceAndPath("minecraft", "village_plains"));
         helper.assertTrue(plainsVillage != null, "Vanilla village structure must exist");
+        // Natural villages can be discovered while preparing this disposable world.
+        // Start this scenario with an empty queue and no in-progress road search.
+        VillageRoads.onLevelUnload(new LevelEvent.Unload(level));
+        level.getDataStorage().set(VillageRoadData.STORAGE_KEY, new VillageRoadData());
         addVillageStart(level, west, plainsVillage);
         addVillageStart(level, east, plainsVillage);
 
