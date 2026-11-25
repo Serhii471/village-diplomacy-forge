@@ -1,0 +1,71 @@
+name: Publish installable JAR
+
+on:
+  push:
+    branches:
+      - main-0.1
+      - main-0.2
+    paths-ignore:
+      - .github/workflows/publish-installable.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: publish-installable-${{ github.ref }}-${{ github.sha }}
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-java@b6effb05e454b25005698d916606bdc6ffcbf961 # v5
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: gradle
+      - name: Build and test the mod
+        run: bash ./gradlew test build --no-daemon
+      - name: Publish the installable JAR
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          version=$(sed -n 's/^mod_version=//p' gradle.properties | tr -d '\r')
+          [[ "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]
+          jar_path="build/libs/villagediplomacy-${version}.jar"
+          test -s "$jar_path"
+          jar tf "$jar_path" > "$RUNNER_TEMP/village-diplomacy-jar-entries.txt"
+          grep -Fx 'META-INF/mods.toml' "$RUNNER_TEMP/village-diplomacy-jar-entries.txt"
+          if grep -Eq 'GameTests?[^/]*\.class$|guard_arena\.nbt$' "$RUNNER_TEMP/village-diplomacy-jar-entries.txt"; then
+            echo 'Unexpected GameTest content in the mod JAR' >&2
+            exit 1
+          fi
+
+          tag="v${version}-build-${GITHUB_SHA}"
+          asset_name=${jar_path##*/}
+          if gh release view "$tag" >/dev/null 2>&1; then
+            assets=$(gh release view "$tag" --json assets --jq '.assets[].name')
+            if ! grep -Fxq "$asset_name" <<< "$assets"; then
+              gh release upload "$tag" "$jar_path"
+            fi
+            if [[ $(gh release view "$tag" --json isDraft --jq .isDraft) == true ]]; then
+              gh release edit "$tag" --draft=false
+            fi
+            exit 0
+          fi
+
+          read -r checksum _ < <(sha256sum "$jar_path")
+          notes="$RUNNER_TEMP/village-diplomacy-release.md"
+          printf '%s\n\n%s\n\n%s\n\n%s\n' \
+            "Automated test build from $GITHUB_REF_NAME at $GITHUB_SHA." \
+            'Requires Minecraft Java Edition 1.20.1, Forge 47.4.28, and Java 17.' \
+            'Download the JAR from Assets and place it in the mods folder. Keep only one version of Village Diplomacy installed.' \
+            "SHA-256: $checksum" > "$notes"
+          gh release create "$tag" "$jar_path" --target "$GITHUB_SHA" \
+            --title "Village Diplomacy $version ($GITHUB_REF_NAME, ${GITHUB_SHA:0:7})" \
+            --notes-file "$notes" --prerelease --latest=false
