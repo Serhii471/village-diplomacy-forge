@@ -26,6 +26,7 @@ All notable changes to Village Diplomacy are documented in this file.
 - Updated GUI and route-signpost textures with credited CC0 sources.
 - Listed both project contributors in mod metadata.
 - Removed machine-specific IntelliJ run configurations; ForgeGradle now generates them locally.
+- Added end-user installation, dedicated-server, update, uninstall, first-start, component, and troubleshooting documentation.
 
 ### Fixed
 
